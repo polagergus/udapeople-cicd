@@ -1,24 +1,6 @@
 version: 2.1
 
 commands:
-install_awscli:
-  description: Install AWS CLI v2
-  steps:
-    - run:
-        name: Install AWS CLI v2
-        command: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install
-
-install_ansible:
-  description: Install Ansible
-  steps:
-    - run:
-        name: Install Ansible
-        command: |
-          python3 -m pip install --user ansible
-
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -53,69 +35,55 @@ install_ansible:
 jobs:
   build-frontend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-deps]
+          keys: [frontend-build]
       - run:
           name: Build front-end
           command: |
-            cd frontend
-            npm install
-            npm run build
+            # Your code here
+            exit 1
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-deps
+          key: frontend-build
 
   build-backend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - run:
           name: Back-end build
           command: |
-            cd backend
-            npm install
-            npm run build
+             # Your code here
+             exit 1
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-deps
+          key: backend-build
 
   test-frontend:
     docker:
-     - image: cimg/node:13.8.0 
+      # Docker image here
     steps:
-     - checkout
-     - restore_cache:
-         keys: [frontend-deps]
-     - run:
-         name: frontend test
-         command: |
-            cd frontend
-            npm install
-            npm test
-              
+      # Checkout code from git
+      # Restore from cache
+      # Your job code here
+                
   test-backend:
     docker:
-       - image: cimg/node:13.8.0
+      # Docker image here
     steps:
-      - checkout
-      - restore_cache:
-          keys: [backend-deps]
-      - run:
-          name: Back-end Unit test
-          command: |
-            cd backend
-            npm install
-            npm test
+      # Checkout code from git
+      # Restore from cache
+      # Your job code here
             
   scan-frontend:
     docker:
-      # - image: cimg/node:13.8.0
+      # Docker image here
     steps:
       # Checkout code from git
       # Restore from cache
@@ -131,36 +99,32 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: cimg/base:stable
+      # Docker image here that supports AWS CLI
     steps:
-      -checkout
-      -install_awscli
+      # Checkout code from git
       - run:
-         name: Ensure back-end infrastructure exists
-         command: |
+          name: Ensure back-end infrastructure exists
+          command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project=Udapepole \
-              --stack-name "aws-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+              #--tags project=your-tag \
+              # --stack-name "your back-end stack name with workflow id" \
+              # --parameter-overrides ID="your workflow id"  
+              exit 1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
-              --tags project=udapepole \
-              --stack-name "aws-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7"     
+              #--tags project=your-tag \
+              # --stack-name "your front-end stack name with workflow id" \
+              # --parameter-overrides ID="your workflow id"  
+              exit 1
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
-             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-             --output text)
-        echo $BACKEND_PUBLIC_IP >> .circleci/ansible/inventory.txt
-        cat .circleci/ansible/inventory.txt
-        
+            # Your code here
+            exit 1
       - persist_to_workspace:
           root: ~/
           paths:
