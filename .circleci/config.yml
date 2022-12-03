@@ -109,7 +109,7 @@ jobs:
             npm install
             npm audit fix --froce --audit-level=critical
             npm audit --audit-level=critical
-        
+            exit 1        
   scan-backend:
     docker:
       - image: cimg/node:13.8.0
@@ -125,7 +125,7 @@ jobs:
             npm audit fix --froce --audit-level=critical
             npm audit fix --froce --audit-level=critical
             npm audit --audit-level=critical
-            
+            exit 1
  # deploy-infrastructure:
  #   docker:
  #     # Docker image here that supports AWS CLI
