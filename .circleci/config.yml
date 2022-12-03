@@ -32,11 +32,8 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
- # Empty frontend bucket
           aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
- # Delete frontend stack
           aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
- # Delete backend stack
           aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
 
 #  revert-migrations:
@@ -192,7 +189,8 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
 
-      -destroy-environment     
+      - destroy-environment
+          
 
  # configure-infrastructure:
  #   docker:
