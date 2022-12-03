@@ -41,7 +41,7 @@ jobs:
       - restore_cache:
           keys: [frontend-deps]
       - run:
-          name: Build front-end
+          name: front-end Build
           command: |
             cd frontend
             npm install
