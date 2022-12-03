@@ -87,19 +87,31 @@ jobs:
 
   test-frontend:
     docker:
-      # Docker image here
+     - image: cimg/node:13.8.0 
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
-                
+     - checkout
+      - restore_cache:
+          keys: [frontend-deps]
+      - run:
+          name: frontend test
+          command: |
+            cd frontend
+            npm install
+            npm test
+              
   test-backend:
     docker:
-      # Docker image here
+       - image: cimg/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_cache:
+          keys: [backend-deps]
+      - run:
+          name: Back-end Unit test
+          command: |
+            cd backend
+            npm install
+            npm test
             
   scan-frontend:
     docker:
