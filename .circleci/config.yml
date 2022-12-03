@@ -43,12 +43,12 @@ jobs:
       - run:
           name: Build front-end
           command: |
-           cd frontend
-           npm install
-           npm run buid
+            cd frontend
+            npm install
+            npm run buid
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-deps
 
   build-backend:
     docker:
@@ -66,8 +66,8 @@ jobs:
       
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-build
-#
+          key: backend-deps
+
  # test-frontend:
  #   docker:
  #     # Docker image here
@@ -91,7 +91,7 @@ jobs:
  #     # Checkout code from git
  #     # Restore from cache
  #     # Your job code here
-#
+
  # scan-backend:
  #   docker:
  #     # Docker image here
@@ -265,7 +265,7 @@ c#leanup:
  #             # your code here
  #           fi
  
-w#orkflows:
+workflows:
   default:
     jobs:
       - build-frontend
