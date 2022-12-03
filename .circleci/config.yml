@@ -109,7 +109,7 @@ jobs:
             npm install
             npm audit fix --force --audit-level=cirtical
             npm audit fix --force --audit-level=cirtical
-            npm audit --audit-level=criticalcd backend
+            npm audit --audit-level=critical
                     
   scan-backend:
     docker:
