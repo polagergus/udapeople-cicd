@@ -106,12 +106,12 @@ jobs:
       - run:
           name: front-end scan
           command: |
-            cd frontend
-            npm install
-            npm audit fix --froce --audit-level=critical
-            npm audit fix --froce --audit-level=critical
-            npm audit --audit-level=critical
-            exit 0
+          cd frontend
+          npm install
+          npm audit fix --froce --audit-level=critical
+          npm audit fix --froce --audit-level=critical
+          npm audit --audit-level=critical
+        
   scan-backend:
     docker:
       - image: cimg/node:13.8.0
@@ -122,12 +122,12 @@ jobs:
       - run:
           name: back-end scan
           command: |
-            cd backend
-            npm install
-            npm audit fix --froce --audit-level=critical
-            npm audit fix --froce --audit-level=critical
-            npm audit --audit-level=critical
-            exit 0
+          cd backend
+          npm install
+          npm audit fix --froce --audit-level=critical
+          npm audit fix --froce --audit-level=critical
+          npm audit --audit-level=critical
+            
  # deploy-infrastructure:
  #   docker:
  #     # Docker image here that supports AWS CLI
