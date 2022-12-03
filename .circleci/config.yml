@@ -103,12 +103,13 @@ jobs:
       - restore_cache:
           keys: [frontend-deps]
       - run:
-          name: Front-end t Scan
+          name: Front-end Scan
           command: |
             cd backend
             npm install
-            npm audit fix --froce --audit-level=critical
-            npm audit --audit-level=critical
+            npm audit fix --force --audit-level=cirtical
+            npm audit fix --force --audit-level=cirtical
+            npm audit --audit-level=criticalcd backend
                     
   scan-backend:
     docker:
@@ -118,12 +119,12 @@ jobs:
       - restore_cache:
           keys: [backend-deps]
       - run:
-          name: Back-end t Scan
+          name: Back-end Scan
           command: |
             cd backend
             npm install
-            npm audit fix --froce --audit-level=critical
-            npm audit fix --froce --audit-level=critical
+            npm audit fix --force --audit-level=cirtical
+            npm audit fix --force --audit-level=cirtical
             npm audit --audit-level=critical
           
  # deploy-infrastructure:
