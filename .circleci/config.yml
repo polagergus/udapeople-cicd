@@ -106,11 +106,11 @@ jobs:
       - run:
           name: front-end scan
           command: |
-          cd frontend
-          npm install
-          npm audit fix --froce --audit-level=critical
-          npm audit fix --froce --audit-level=critical
-          npm audit --audit-level=critical
+            cd frontend
+            npm install
+            npm audit fix --froce --audit-level=critical
+            npm audit fix --froce --audit-level=critical
+            npm audit --audit-level=critical
         
   scan-backend:
     docker:
@@ -122,11 +122,11 @@ jobs:
       - run:
           name: back-end scan
           command: |
-          cd backend
-          npm install
-          npm audit fix --froce --audit-level=critical
-          npm audit fix --froce --audit-level=critical
-          npm audit --audit-level=critical
+            cd backend
+            npm install
+            npm audit fix --froce --audit-level=critical
+            npm audit fix --froce --audit-level=critical
+            npm audit --audit-level=critical
             
  # deploy-infrastructure:
  #   docker:
