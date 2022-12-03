@@ -29,7 +29,7 @@ Resources:
       SecurityGroups:
         - Ref: InstanceSecurityGroup
       KeyName: AWS 
-      ImageId: ami-0149b2da6ceec4bb0 
+      ImageId: ami-0a6b2839d44d781b2 
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
