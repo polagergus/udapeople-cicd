@@ -34,7 +34,7 @@ commands:
                # Use n version manager to use Node.js v13.8.0
                sudo npm install -g n
                sudo n 13.8.0  
-                
+
     destroy-environment:
       description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
       parameters:
@@ -205,26 +205,28 @@ jobs:
 
       - destroy-environment
           
+ configure-infrastructure:
+   docker:
+      - image: cimg/python:3.10
+   steps:
+     - checkout
+     - install_awscli
+     - add_ssh_keys:
+          fingerprints: ["72:25:3d:91:aa:f2:1d:8d:7e:16:9b:dc:e8:39:53:26"]
+     - attach_workspace:
+         at: ~/      
+     - run:
+         name: Install dependencies
+         command: |
+           # Your code here
+           exit 1
+     - run:
+         name: Configure server
+         command: |
+           # Your code here
+           exit 1
 
- # configure-infrastructure:
- #   docker:
- #     # Docker image here that supports Ansible
- #   steps:
- #     # Checkout code from git
- #     # Add ssh keys with fingerprint
- #     # attach workspace
- #     - run:
- #         name: Install dependencies
- #         command: |
- #           # Your code here
- #           exit 1
- #     - run:
- #         name: Configure server
- #         command: |
- #           # Your code here
- #           exit 1
- #     # Here's where you will add some code to rollback on failure      
-#
+     # Here's where you will add some code to rollback on failure      
  # run-migrations:
  #   docker:
  #     # Docker image here that supports NodeJS
@@ -355,8 +357,8 @@ workflows:
           filters:
             branches:
               only: [master]
- #     - configure-infrastructure:
- #         requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
  #     - run-migrations:
  #         requires: [configure-infrastructure]
  #     - deploy-frontend:
