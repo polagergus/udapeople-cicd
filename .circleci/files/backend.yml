@@ -18,8 +18,8 @@ Resources:
           ToPort: 22
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          FromPort: 3030
-          ToPort: 3030
+          FromPort: 9100
+          ToPort: 9100
           CidrIp: 0.0.0.0/0
 
   EC2Instance:
@@ -27,7 +27,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
-        - Ref: InstanceSecurityGroup
+         - Ref: InstanceSecurityGroup
       KeyName: AWS 
       ImageId: ami-0574da719dca65348 
       Tags:
