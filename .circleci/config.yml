@@ -205,7 +205,7 @@ jobs:
 
       - destroy-environment
           
- configure-infrastructure:
+  configure-infrastructure:
    docker:
       - image: cimg/python:3.10
    steps:
