@@ -36,21 +36,21 @@ commands:
                sudo npm install -g n
                sudo n 13.8.0 
 
-#    destroy-environment:
-#      description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-#      parameters:
-#        Workflow_ID:
-#          type: string
-#          default: ${CIRCLE_WORKFLOW_ID:0:7}   
-#      steps:
-#        - run:
-#            name: Destroy environment
-#            when: on_fail
-#            command: |
-#              aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
-#              aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
-#              aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
-#        - destroy-environment
+    destroy-environment:
+      description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+      parameters:
+        Workflow_ID:
+          type: string
+          default: ${CIRCLE_WORKFLOW_ID:0:7}   
+      steps:
+        - run:
+            name: Destroy environments
+            when: on_fail
+            command: |
+              aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
+              aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+              aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
+        - destroy-environment
         
 #  revert-migrations:
 #    description: Revert the last migration if successfully run in the current workflow.
@@ -166,23 +166,23 @@ jobs:
             npm audit fix --force --audit-level=cirtical
             npm audit --audit-level=critical
           
-  #deploy-infrastructure:
-  #  docker:
-  #    - image: cimg/python:3.10
-  #  steps:
-  #    - checkout
-  #    - install_awscli
-  #    - install_ansible
-  #    - run:
-  #        name: Ensure back-end infrastructure exists
-  #        command: |
-  #          aws cloudformation deploy \
-  #            --template-file .circleci/files/backend.yml \
-  #            --tags project=udapeople \
-  #            --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-  #            --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
-#
-  #    - destroy-environment
+  deploy-infrastructure:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - install_awscli
+      - install_ansible
+      - run:
+          name: Ensure back-end infrastructure exists
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/backend.yml \
+              --tags project=udapeople \
+              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
+
+      - destroy-environment
 
       - run:
           name: Ensure front-end infrastructure exist
@@ -356,13 +356,13 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      #- deploy-infrastructure:
-      #    requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #    filters:
-      #      branches:
-      #        only: [master]
-      #- configure-infrastructure:
-      #    requires: [deploy-infrastructure]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
  #    # - run-migrations:
  #         requires: [configure-infrastructure]
  #     - deploy-frontend:
