@@ -240,6 +240,7 @@ jobs:
             npm install
             npm run migration > migrations_dump.txt
             cat migrations_dump.txt
+            exit 0
       - run:
           name: Send migration results to memstash
           command: |
