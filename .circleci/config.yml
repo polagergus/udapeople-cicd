@@ -172,6 +172,7 @@ jobs:
     steps:
       - checkout
       - install_awscli
+      - install_ansible
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -181,6 +182,8 @@ jobs:
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
 
+      - destroy-environment
+      
       - run:
           name: Ensure front-end infrastructure exist
           command: |
