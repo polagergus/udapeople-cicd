@@ -166,24 +166,24 @@ jobs:
             npm audit fix --force --audit-level=cirtical
             npm audit --audit-level=critical
           
-  deploy-infrastructure:
-    docker:
-      - image: cimg/python:3.10
-    steps:
-      - checkout
-      - install_awscli
-      - install_ansible
-      - run:
-          name: Ensure back-end infrastructure exists
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
-              --tags project=udapeople \
-              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
+  #deploy-infrastructure:
+  #  docker:
+  #    - image: cimg/python:3.10
+  #  steps:
+  #    - checkout
+  #    - install_awscli
+  #    - install_ansible
+  #    - run:
+  #        name: Ensure back-end infrastructure exists
+  #        command: |
+  #          aws cloudformation deploy \
+  #            --template-file .circleci/files/backend.yml \
+  #            --tags project=udapeople \
+  #            --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+  #            --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
+#
+  #    - destroy-environment
 
-      - destroy-environment
-      
       - run:
           name: Ensure front-end infrastructure exist
           command: |
