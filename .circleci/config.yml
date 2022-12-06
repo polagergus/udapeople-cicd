@@ -44,12 +44,12 @@ commands:
           default: ${CIRCLE_WORKFLOW_ID:0:7}   
       steps:
         - run:
-           name: Destroy environments
-           when: on_fail
-           command: |
-             aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
-             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
-             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
+            name: Destroy environments
+            when: on_fail
+            command: |
+              aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
+              aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+              aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
         - destroy-environment
         
 #  revert-migrations:
@@ -224,7 +224,7 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
-            
+
      - destroy-environment
 
      # Here's where you will add some code to rollback on failure      
