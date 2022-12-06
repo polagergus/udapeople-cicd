@@ -339,8 +339,8 @@ c#leanup:
  #             # your code here
  #           fi
  
- workflows:
-   default:
+workflows:
+  default:
     jobs:
       - build-frontend
       - build-backend
