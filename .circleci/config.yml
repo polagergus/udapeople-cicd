@@ -291,14 +291,14 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - install_awscli
+      - install_awscli 
       - install_ansible
       - install_nodejs
       - add_ssh_keys:
             fingerprints: ["72:25:3d:91:aa:f2:1d:8d:7e:16:9b:dc:e8:39:53:26"]
       - attach_workspace:
            at: ~/
-      - restore_cashe:
+      - restore_cache:
            keys: [backend-deps]  
       - run:
           name: Install dependencies
