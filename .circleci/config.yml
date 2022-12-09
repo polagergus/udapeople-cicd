@@ -286,23 +286,47 @@ jobs:
       - destroy-environment
       - revert-migrations  
                           
- # deploy-backend:
- #   docker:
- #     # Docker image here that supports Ansible
- #   steps:
- #     # Checkout code from git
- #     # Add ssh keys with fingerprint
- #     # attach workspace
- #     - run:
- #         name: Install dependencies
- #         command: |
- #           # your code here
- #     - run:
- #         name: Deploy backend
- #         command: |
- #           # your code here
- #     # Here's where you will add some code to rollback on failure  
-#
+ deploy-backend:
+   docker:
+     - image: cimg/base:stable
+   steps:
+     - checkout
+     - install_awscli
+     - install_ansible
+     - install_nodejs
+     - add_ssh_keys:
+          fingerprinter: ["72:25:3d:91:aa:f2:1d:8d:7e:16:9b:dc:e8:39:53:26"]
+     - attach_workspace:
+         at:~/
+     - restore_cashe:
+          keys: [backend-deps]  
+     - run:
+         name: Install dependencies
+         command: |
+           cd backend
+           npm install 
+     - run:
+         name: Deploy backend
+         command: | 
+           cd backend
+           npm run build
+           tar -czf artifact.tar.gz dist/* package*
+     
+           cd ..
+           cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files  
+     - run:
+         name: Deploy backend
+         command: |
+           export TYPEORM_MIGRATIONS_DIR=./migrations
+           export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+           export TYPEORM_MIGRATIONS=./migrations/*.ts
+     
+           cd .circleci/ansible
+           cat inventory.txt
+           ansible-playbook -i inventory.txt deploy-backend.yml
+
+     - destroy-environment
+     - revert-migrations     
  # smoke-test:
  #   docker:
  #     # Lightweight Docker image 
