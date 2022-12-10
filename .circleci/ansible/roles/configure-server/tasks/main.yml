@@ -10,12 +10,6 @@
     sudo n 13.8.0
 
 
-- name: "install Node.js 13"
-  become: true
-  apt:
-    name: ["nodejs"]
-    state: lasted
-    update_cache: yes
 
 - name: "Install PM2 Globally"
   npm:
