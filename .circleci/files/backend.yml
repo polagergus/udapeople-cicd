@@ -27,8 +27,8 @@ Resources:
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
-         - Ref: InstanceSecurityGroup
-      KeyName: AWS 
+        - Ref: InstanceSecurityGroup
+      KeyName: AWS
       ImageId: ami-0574da719dca65348 
       Tags:
         - Key: Name
