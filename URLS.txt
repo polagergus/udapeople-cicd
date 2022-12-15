@@ -1,0 +1,7 @@
+
+
+GitHub: https://github.com/polagergus/udapeople-cicd
+S3 Bouket: http://udapeople-2022f21.s3-website-us-east-1.amazonaws.com
+Cloud Front: https://d23th2pk0yet83.cloudfront.net
+backend: ec2-44-213-41-165.compute-1.amazonaws.com
+Prometheus: ec2-54-157-3-185.compute-1.amazonaws.com
